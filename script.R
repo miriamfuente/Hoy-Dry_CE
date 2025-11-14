@@ -144,26 +144,34 @@ png("frequency_mean.png")
 spatialPlot(frequency.mean, set.min=0, set.max=12, at=seq(0, 12, 1), color.theme="YlOrRd", main="Frecuencia media de eventos hot-dry (1986-2005)")
 dev.off()
 
-# # Duración
-# source("/gpfs/users/fuentem/functions/fun.duration.h-d.season.R")
-# racha <- 2
-# duration <- fun.duration(frecuency, hottest.month, racha, years)
+# Duración
+source("functions/fun.duration.h-d.season.R")
+racha <- 2
+duration <- fun.duration(frecuency, hottest.month, racha, years)
 # saveRDS(duration, paste0(path, "ce.duration.era5-land.HOT.DRY.station.ventana.movil.", year.range, ".", region, ".rds"), compress = "xz")
 
-# print("Duration: Done")
+print("Duration: Done")
 
-# # Severidad
-# source("/gpfs/users/fuentem/functions/fun.severity.h-d.season.R")
-# severity <- fun.severity(hottest.month, pr.obs = pr.tf.hist, tmax.obs = tmax.tf.hist, pr.daily = pr.tf.hist, tmax.daily = tmax.tf.hist)
+# Severidad
+source("functions/fun.severity.h-d.season.R")
+severity <- fun.severity(hottest.month, pr.obs = pr.tf.hist, tmax.obs = tmax.tf.hist, pr.daily = pr.tf.hist, tmax.daily = tmax.tf.hist)
 # saveRDS(severity, paste0(path, "ce.severity.era5-land.HOT.DRY.station.ventana.movil.", year.range, ".", region, ".rds"), compress = "xz")
 
-# print("Severity: Done")
+print("Severity: Done")
 
-# # Categorías
-# source("/gpfs/users/fuentem/functions/fun.categories.h-d.season.R")
-# categories <- fun.categories(severity, hottest.month)
+# Categorías
+source("functions/fun.categories.h-d.season.R")
+categories <- fun.categories(severity, hottest.month)
 # saveRDS(categories, paste0(path, "ce.categories.era5-land.HOT.DRY.station.ventana.movil.", year.range, ".", region, ".rds"), compress = "xz")
 
 
+# Intensidad
+source("functions/fun.intensity.R")
+intensity <- fun.intensity(hottest.month, pr.tf.ev, tmax.tf.ev, pr.tf, tmax.tf)
+# saveRDS(severity, paste0(path, "ce.severity.era5-land.HOT.DRY.station.ventana.movil.", year.range, ".", region, ".rds"), compress = "xz")
 
-# print(paste0(path, "ce.categories.era5-land.HOT.DRY.station.ventana.movil.RAW.DATA.", year.range, ".", region, ".rds"))
+print("Severity: Done")
+
+# Categorías Intensidad
+source("functions/fun.categories.intensity_mean.R")
+categories.intensity_mean <- fun.categories.intesity_mean(intensity, hottest.month)
